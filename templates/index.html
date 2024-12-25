@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+<form method="POST" class="card p-5" style="background: linear-gradient(150deg, #c4f5f8, #1a6bc7);">
+  <div class="form-group">
+    <div class="d-grid col-6 mx-auto">
+        <input type="text" class="form-control input-group-lg" name="city" placeholder="Your City">
+        <div style="height:15px"></div>
+        <button class="btn btn-primary btn-lg" type="submit">Get Weather</button>
+    </div>
+  </div>
+</form>
+
+{% endblock %}
