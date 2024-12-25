@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_CONTAINER_REGISTRY: "myazcreg.azurecr.io"
+  AZURE_CONTAINER_REGISTRY: "myazcreg"
   CONTAINER_NAME: "tourx-app"
   RESOURCE_GROUP: "githubActions"
   CLUSTER_NAME: "myaksCluster"
