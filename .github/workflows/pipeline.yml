@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_CONTAINER_REGISTRY: "myazcreg"
+  AZURE_CONTAINER_REGISTRY: "myazcreg.azurecr.io"
   CONTAINER_NAME: "tourx-app"
   RESOURCE_GROUP: "githubActions"
   CLUSTER_NAME: "myaksCluster"
@@ -31,10 +31,15 @@ jobs:
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
       # Builds and pushes an image up to your Azure Container Registry
-      - name: Build and push image to ACR
-        run: |
-          docker build . -t ${{ AZURE_CONTAINER_REGISTRY }}/tourx:${{ github.sha }}
-          docker push ${{ AZURE_CONTAINER_REGISTRY }}/tourx:${{ github.sha }}
+      - name: 'Build and push image'
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ secrets.AZURE_CONTAINER_REGISTRY }}
+          username: ${{ secrets.AZURE_CLIENT_ID }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+      - run: |
+          docker build . -t ${{ secrets.AZURE_CONTAINER_REGISTRY }}/sampleapp:${{ github.sha }}
+          docker push ${{ secrets.AZURE_CONTAINER_REGISTRY }}/sampleapp:${{ github.sha }}
 
   deploy:
     permissions:
@@ -77,4 +82,4 @@ jobs:
           action: deploy
           manifests: ${{ env.DEPLOYMENT_MANIFEST_PATH }}
           images: |
-            ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ github.sha }}
+            ${{ env.AZURE_CONTAINER_REGISTRY }}/${{ env.CONTAINER_NAME }}:${{ github.sha }}
