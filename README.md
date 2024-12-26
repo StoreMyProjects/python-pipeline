@@ -27,7 +27,12 @@ az ad sp create-for-rbac --name "GitHub-Actions" --role contributor --scopes /su
 az role assignment create --assignee <ClientId> --scope /subscriptions/<subscriptionId>/resourceGroups/githubActions/providers/Microsoft.ContainerRegistry/registries/<ACRegistryId> --role AcrPush
 ```
 
-### Create AKS cluster.
+### Create AKS cluster and attach earlier created ACR to it.
 ```
-az aks create --resource-group githubActions --name myaksCluster --node-count 1 --generate-ssh-keys
+az aks create --resource-group githubActions --name myaksCluster --node-count 1 --generate-ssh-keys --attach-acr <AcrName>
+```
+
+### Cleanup all resources.
+```
+az group delete --name githubActions
 ```
