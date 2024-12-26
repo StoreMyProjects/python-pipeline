@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   name: weather-app
 spec:
+  replicas: 3
   selector:
     matchLabels:
       app: weather-app
