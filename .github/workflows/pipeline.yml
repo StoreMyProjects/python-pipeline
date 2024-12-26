@@ -7,7 +7,7 @@ on:
 
 env:
   AZURE_CONTAINER_REGISTRY: "myazcreg.azurecr.io"
-  CONTAINER_NAME: "tourx-app"
+  CONTAINER_NAME: "weather-app"
   RESOURCE_GROUP: "githubActions"
   CLUSTER_NAME: "myaksCluster"
   DEPLOYMENT_MANIFEST_PATH: "k8s"
@@ -38,8 +38,8 @@ jobs:
           username: ${{ secrets.AZURE_CLIENT_ID }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
       - run: |
-          docker build . -t ${{ env.AZURE_CONTAINER_REGISTRY }}/tourx:${{ github.sha }}
-          docker push ${{ env.AZURE_CONTAINER_REGISTRY }}/tourx:${{ github.sha }}
+          docker build . -t ${{ env.AZURE_CONTAINER_REGISTRY }}/weather-app:${{ github.sha }}
+          docker push ${{ env.AZURE_CONTAINER_REGISTRY }}/weather-app:${{ github.sha }}
 
   deploy:
     permissions:
